@@ -2,6 +2,7 @@ package seehow.spring.petclinic.bootstrap;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import seehow.spring.petclinic.model.Owner;
 import seehow.spring.petclinic.services.VetService;
 import seehow.spring.petclinic.services.OwnerService;
 
@@ -17,6 +18,16 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        Owner owner1 = new Owner();
+        owner1.setFirstName("Fiona");
+        owner1.setLastName("Glename");
+        owner1.setId(1L);
+        ownerService.save(owner1);
 
+        Owner owner2 = new Owner();
+        owner2.setFirstName("Michael");
+        owner2.setLastName("Weston");
+        owner2.setId(2L);
+        ownerService.save(owner2);
     }
 }
