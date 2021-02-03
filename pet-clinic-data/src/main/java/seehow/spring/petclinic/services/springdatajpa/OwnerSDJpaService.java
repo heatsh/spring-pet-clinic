@@ -9,7 +9,6 @@ import seehow.spring.petclinic.repositories.PetTypeRepository;
 import seehow.spring.petclinic.services.OwnerService;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
