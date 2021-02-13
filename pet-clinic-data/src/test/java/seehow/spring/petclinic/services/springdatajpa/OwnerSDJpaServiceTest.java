@@ -1,6 +1,5 @@
 package seehow.spring.petclinic.services.springdatajpa;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,7 +29,7 @@ class OwnerSDJpaServiceTest {
     PetTypeRepository petTypeRepository;
 
     @InjectMocks
-    OwnerSDJpaService ownerSDJpaService;
+    OwnerSDJpaService service;
 
     @Test
     void findAll() {
@@ -38,7 +37,7 @@ class OwnerSDJpaServiceTest {
         owners.add(new Owner());
         owners.add(new Owner());
         when(ownerRepository.findAll()).thenReturn(owners);
-        assertEquals(2, ownerSDJpaService.findAll().size());
+        assertEquals(2, service.findAll().size());
     }
 
     @Test
@@ -48,28 +47,28 @@ class OwnerSDJpaServiceTest {
         when(ownerRepository.findById(any())).thenReturn(Optional.empty());
         when(ownerRepository.findById(ownerId)).thenReturn(Optional.of(new Owner()));
 
-        assertNull(ownerSDJpaService.findById(10L));
-        assertNotNull(ownerSDJpaService.findById(ownerId));
+        assertNull(service.findById(10L));
+        assertNotNull(service.findById(ownerId));
         verify(ownerRepository).findById(ownerId);
     }
 
     @Test
     void save() {
         when(ownerRepository.save(any())).thenReturn(new Owner());
-        assertNotNull(ownerSDJpaService.save(new Owner()));
+        assertNotNull(service.save(new Owner()));
         verify(ownerRepository).save(any());
     }
 
     @Test
     void delete() {
-        ownerSDJpaService.delete(new Owner());
+        service.delete(new Owner());
         verify(ownerRepository).delete(any());
     }
 
     @Test
     void deleteById() {
         Long id = 2L;
-        ownerSDJpaService.deleteById(id);
+        service.deleteById(id);
         verify(ownerRepository).deleteById(id);
     }
 
@@ -80,10 +79,10 @@ class OwnerSDJpaServiceTest {
         when(ownerRepository.findByLastName(any())).thenReturn(null);
         when(ownerRepository.findByLastName(lastName)).thenReturn(new Owner());
 
-        assertNull(ownerSDJpaService.findByLastName("unknown"));
+        assertNull(service.findByLastName("unknown"));
         verify(ownerRepository).findByLastName("unknown");
 
-        assertNotNull(ownerSDJpaService.findByLastName(lastName));
+        assertNotNull(service.findByLastName(lastName));
         verify(ownerRepository).findByLastName(lastName);
     }
 }
