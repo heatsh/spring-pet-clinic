@@ -10,6 +10,8 @@ import seehow.spring.petclinic.model.Owner;
 import seehow.spring.petclinic.services.OwnerService;
 
 import javax.validation.Valid;
+import java.beans.PropertyEditorSupport;
+import java.time.LocalDate;
 import java.util.List;
 
 @RequestMapping("/owners")
@@ -34,7 +36,7 @@ public class OwnerController {
     }
 
     @GetMapping
-    public String processFindForm(Owner owner, BindingResult result,Model model) {
+    public String processFindForm(Owner owner, BindingResult result, Model model) {
 
         // allow parameterless GET request for /owners to return all records
         if (owner.getLastName() == null) {
@@ -47,13 +49,11 @@ public class OwnerController {
             // no owners found
             result.rejectValue("lastName", "notFound", "not found");
             return "owners/findOwners";
-        }
-        else if (results.size() == 1) {
+        } else if (results.size() == 1) {
             // 1 owner found
             owner = results.get(0);
             return "redirect:/owners/" + owner.getId();
-        }
-        else {
+        } else {
             // multiple owners found
             model.addAttribute("selections", results);
             return "owners/ownersList";
@@ -78,8 +78,7 @@ public class OwnerController {
     public String processCreationForm(@Valid Owner owner, BindingResult result) {
         if (result.hasErrors()) {
             return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
-        }
-        else {
+        } else {
             Owner savedOwner = ownerService.save(owner);
             return "redirect:/owners/" + savedOwner.getId();
         }
@@ -96,8 +95,7 @@ public class OwnerController {
                                          @PathVariable Long ownerId) {
         if (result.hasErrors()) {
             return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
-        }
-        else {
+        } else {
             owner.setId(ownerId);
             Owner savedOwner = ownerService.save(owner);
             return "redirect:/owners/" + savedOwner.getId();
